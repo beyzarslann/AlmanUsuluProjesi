@@ -1,0 +1,59 @@
+<br />
+<h1>{{ title }}</h1>
+<hr />
+
+<form [formGroup]="kullaniciMiktarForm" (ngSubmit)="kullaniciMiktarFormGonder()" *ngIf="kullaniciMiktarAlani">
+  <label for="kullanici-sayisi">Kullanıcı Sayısı: </label>
+  <input id="kullanici-sayisi" type="number" formControlName="sayi" />
+  <button type="submit" [disabled]="!kullaniciMiktarForm.valid">
+    Devam Et
+  </button>
+</form>
+
+<form [formGroup]="kullanicilarForm" *ngIf="kullanicilarAlani">
+  <label for="kullanici-sayisi">Kullanıcılar: </label>
+
+  <ng-container formArrayName="kullanicilar">
+    <ng-container *ngFor="let tesForm of kullanicilar.controls; let i = index">
+      <div [formGroupName]="i">
+        <hr />
+        <div style="margin-bottom: 10px">
+          <label for="isim">Kullanıcı İsim: </label>
+          <input id="isim" type="text" formControlName="isim" autocomplete="off" />
+        </div>
+        <div style="margin-bottom: 10px">
+          <label for="harcama">Kullanıcı Harcama: </label>
+          <input id="harcama" type="number" formControlName="harcama" />
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <br />
+
+  <button type="button" [disabled]="!kullanicilarForm.valid" (click)="harcamaHesap()"> Harcamaları Hesapla </button>
+
+  <button type="button" (click)="geriDon()">Geri Dön</button>
+
+  <button (click)="kaydet()">Kaydet</button>
+  <br />
+
+
+  <div *ngIf="toplamHarcamaHesapla">
+    <h2>Harcamalar:</h2>
+    <ul>
+      <li *ngFor="let harcama of harcamalar">
+        {{ harcama.isim }}: {{ harcama.harcama }}
+      </li>
+    </ul>
+    <p>Toplam Harcama: {{ toplamHarcama }} - ${{toplamHesapDoviz}} </p>
+    <p>Ortalama Harcama: {{ ortalamaHarcama }}</p>
+    <p>Borçlar : </p>
+    <ul>
+      <li *ngFor="let borc of borclarHesabi">
+        {{ borc.borcluIsim }} 'nin {{ borc.alacakliIsim }} 'ye borcu : {{ borc.borcMiktari }} -
+        ${{borc.borcMiktariDoviz}}
+      </li>
+    </ul>
+  </div>
+</form>
