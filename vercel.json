@@ -1,10 +1,5 @@
 {
-  "build": {
-    "env": {
-      "framework": "angular"
-    },
-    "buildCommand": "ng build --prod"
-  }
+  "framework": "angular"
 }
 
   
